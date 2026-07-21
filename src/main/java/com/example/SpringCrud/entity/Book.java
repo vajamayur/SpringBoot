@@ -4,8 +4,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "book")
 public class Book {
 
     @Id
@@ -16,11 +18,9 @@ public class Book {
     private String author;
     private double price;
 
-    // Default Constructor
     public Book() {
     }
 
-    // Parameterized Constructor
     public Book(Long id, String name, String author, double price) {
         this.id = id;
         this.name = name;
@@ -28,7 +28,6 @@ public class Book {
         this.price = price;
     }
 
-    // Getters and Setters
     public Long getId() {
         return id;
     }

@@ -12,33 +12,38 @@ import com.example.SpringCrud.repository.BookRepository;
 public class BookService {
 
     @Autowired
-    private BookRepository bookRepository;
+    private BookRepository repository;
 
-    // Get All Books
-    public List<Book> getAllBooks() {
-        return bookRepository.findAll();
+    public Book saveBook(Book book) {
+        return repository.save(book);
     }
 
-    public Book addBook(Book book) {
-    return bookRepository.save(book);
+    public List<Book> getBooks() {
+        return repository.findAll();
     }
 
     public Book getBookById(Long id) {
-    return bookRepository.findById(id).orElse(null);
+        return repository.findById(id).orElse(null);
     }
 
     public Book updateBook(Long id, Book book) {
 
-    Book b = bookRepository.findById(id).orElse(null);
+        Book existing = repository.findById(id).orElse(null);
 
-    if (b != null) {
-        b.setName(book.getName());
-        b.setAuthor(book.getAuthor());
-        b.setPrice(book.getPrice());
+        if (existing != null) {
+            existing.setName(book.getName());
+            existing.setAuthor(book.getAuthor());
+            existing.setPrice(book.getPrice());
 
-        return bookRepository.save(b);
-    }
+            return repository.save(existing);
+        }
 
         return null;
     }
-}
+
+    public String deleteBook(Long id) {
+
+        repository.deleteById(id);
+        return "Book Deleted Successfully";
+    }
+}   

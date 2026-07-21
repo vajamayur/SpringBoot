@@ -3,41 +3,40 @@ package com.example.SpringCrud.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.SpringCrud.entity.Book;
 import com.example.SpringCrud.service.BookService;
 
 @RestController
+@RequestMapping("/books")
 public class BookController {
 
     @Autowired
-    private BookService bookService;
+    private BookService service;
 
-    // Get All Books
-    @GetMapping("/books")
-    public List<Book> getAllBooks() {
-        return bookService.getAllBooks();
-    }
-
-    // Add Book
-    @PostMapping("/books")
+    @PostMapping
     public Book addBook(@RequestBody Book book) {
-        return bookService.addBook(book);
+        return service.saveBook(book);
     }
 
-    @GetMapping("/books/{id}")
-    public Book getBookById(@PathVariable Long id) {
-        return bookService.getBookById(id);
+    @GetMapping
+    public List<Book> getBooks() {
+        return service.getBooks();
     }
 
-    @PutMapping("/books/{id}")
+    @GetMapping("/{id}")
+    public Book getBook(@PathVariable Long id) {
+        return service.getBookById(id);
+    }
+
+    @PutMapping("/{id}")
     public Book updateBook(@PathVariable Long id, @RequestBody Book book) {
-        return bookService.updateBook(id, book);
+        return service.updateBook(id, book);
+    }
+
+    @DeleteMapping("/{id}")
+    public String deleteBook(@PathVariable Long id) {
+        return service.deleteBook(id);
     }
 }
